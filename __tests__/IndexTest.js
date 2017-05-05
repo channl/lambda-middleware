@@ -1,4 +1,3 @@
-import type { LambdaContext, LambdaCallbackFunc } from '../src/FlowTypes';
 import createLambdaCallbackPromise from 'lambda-dev-utils/createLambdaCallbackPromise';
 import LambdaMiddleware from '../src/LambdaMiddleware';
 import lambdaConsole from '../src/lambdaConsole';
@@ -33,7 +32,7 @@ it('Single middleware works', async () => {
   // Invoke
   app.handler(event, context, callback);
   const result = await promise;
-  const expectedResult = null;
+
   // $FlowIgnore
   expect(result).toEqual({ message: 'Hello World'});
 });
@@ -67,7 +66,7 @@ it('Multiple middlewares work', async () => {
   // Invoke
   app.handler(event, context, callback);
   const result = await promise;
-  const expectedResult = null;
+
   // $FlowIgnore
   expect(result).toEqual({ message: 'Hello World'});
 });
