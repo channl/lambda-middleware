@@ -1,6 +1,6 @@
 {
   "name": "lambda-middleware",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Expressive middleware framework for AWS Lambda and Node.js",
   "contributors": [
     "Thomas Mitchell <channlappio@gmail.com>"
@@ -10,9 +10,9 @@
     "type": "git",
     "url": "http://github.com/channl/lambda-middleware.git"
   },
-  "main": "src/Index.js",
+  "main": "lib/Index.js",
   "files": [
-    "src",
+    "lib",
     "README.md"
   ],
   "dependencies": {},
@@ -21,7 +21,7 @@
     "babel-eslint": "7.1.1",
     "babel-jest": "18.0.0",
     "babel-loader": "7.0.0-alpha.3",
-    "babel-preset-lambda-app": "^0.1.1",
+    "babel-preset-lambda-app": "^0.1.3",
     "babel-runtime": "^6.20.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
@@ -36,10 +36,12 @@
     "eslint-plugin-import": "2.0.1",
     "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "0.10.1",
+    "flow-babel-webpack-plugin": "^1.0.1",
     "flow-bin": "^0.44.2",
     "fs-extra": "0.30.0",
     "http-proxy-middleware": "0.17.3",
     "jest": "18.1.0",
+    "klaw": "^1.3.1",
     "lambda-dev-utils": "^0.1.1",
     "object-assign": "4.1.1",
     "promise": "7.1.1",
@@ -52,7 +54,9 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "flow": "flow src",
+    "flowgen": "flow gen-flow-files ./src/*.js --include ./src/*.js --out-dir ./lib"
   },
   "jest": {
     "collectCoverageFrom": [

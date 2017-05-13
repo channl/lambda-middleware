@@ -20,6 +20,8 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const path = require('path');
 const url = require('url');
+const babel = require('babel-core');
+const klaw = require('klaw');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
@@ -56,8 +58,38 @@ function printErrors(summary, errors) {
   });
 }
 
-// Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
+  console.log('Creating an library build...');
+
+  klaw(paths.appSrc)
+    .on('data', function (item) {
+      if (item.stats.isDirectory()) {
+        return;
+      }
+
+      // Write babel output
+      const code = babel.transformFileSync(item.path).code;
+      const relPath = path.relative(paths.appSrc, item.path)
+      const outputPath = path.resolve(paths.appBuild, relPath);
+      fs.writeFileSync(outputPath, code);
+
+      // Write flow output
+      const origCode = fs.readFileSync(item.path);
+      fs.writeFileSync(outputPath + '.flow', origCode);
+    })
+    .on('end', function () {
+    });
+/*
+  const fileName = 'Index.js';
+  const inputFile = path.resolve(paths.appSrc, fileName);
+  const outputFile = path.resolve(paths.appBuild, fileName);
+  const code = babel.transformFileSync(inputFile).code;
+  fs.writeFileSync(outputFile, code);
+*/
+}
+
+// Create the production build and print the deployment instructions.
+function buildOld(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
   let compiler;
