@@ -17,20 +17,22 @@ class LambdaMiddleware {
     this._pipeline.push(middleware);
   }
 
-  async handler(event: Object, context: LambdaContext, callback: LambdaCallbackFunc) {
-    try {
-      let ctx: MiddlewareContext = {
-        event,
-        context,
-        callback,
-      };
+  getHandler() {
+    return async (event: Object, context: LambdaContext, callback: LambdaCallbackFunc) => {
+      try {
+        let ctx: MiddlewareContext = {
+          event,
+          context,
+          callback,
+        };
 
-      const handler = this._getHandler(0);
-      const result = await handler(ctx);
-      callback(null, result);
-    } catch (e) {
-      callback(e);
-    }
+        const handler = this._getHandler(0);
+        const result = await handler(ctx);
+        callback(null, result);
+      } catch (e) {
+        callback(e);
+      }
+    };
   }
 
   _getHandler(index: number): MiddlewareInterFunc {

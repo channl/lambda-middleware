@@ -1,3 +1,4 @@
+/* @flow */
 import createLambdaCallbackPromise from 'lambda-dev-utils/createLambdaCallbackPromise';
 import LambdaMiddleware from '../src/LambdaMiddleware';
 import lambdaConsole from '../src/lambdaConsole';
@@ -30,7 +31,8 @@ it('Single middleware works', async () => {
   const { callback, promise } = createLambdaCallbackPromise();
 
   // Invoke
-  app.handler(event, context, callback);
+  const handler = app.getHandler();
+  handler(event, context, callback);
   const result = await promise;
 
   // $FlowIgnore
@@ -64,7 +66,8 @@ it('Multiple middlewares work', async () => {
   const { callback, promise } = createLambdaCallbackPromise();
 
   // Invoke
-  app.handler(event, context, callback);
+  const handler = app.getHandler();
+  handler(event, context, callback);
   const result = await promise;
 
   // $FlowIgnore
@@ -97,7 +100,8 @@ it('Middlewares with error works', async () => {
   const { callback, promise } = createLambdaCallbackPromise();
 
   // Invoke
-  app.handler(event, context, callback);
+  const handler = app.getHandler();
+  handler(event, context, callback);
   // await expect(promise).rejects.toEqual(new Error('Something bad happened'));
 
   try {
