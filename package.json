@@ -1,6 +1,6 @@
 {
   "name": "lambda-middleware",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Expressive middleware framework for AWS Lambda and Node.js",
   "contributors": [
     "Thomas Mitchell <channlappio@gmail.com>"
